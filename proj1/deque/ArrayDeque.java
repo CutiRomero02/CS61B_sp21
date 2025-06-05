@@ -63,6 +63,9 @@ public class ArrayDeque<T> implements Deque<T> {
 
     @Override
     public T removeLast() {
+        if (size == 0) {
+            return null;
+        }
         T res = item[(front + size - 1) % item.length];
         item[(front + size - 1) % item.length] = null;
         size--;
