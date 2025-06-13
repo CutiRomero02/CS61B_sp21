@@ -1,6 +1,8 @@
 package deque;
 
-public class ArrayDeque<T> implements Deque<T> {
+import java.util.Iterator;
+
+public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     T[] item;
     int size;
     int front;
@@ -56,7 +58,7 @@ public class ArrayDeque<T> implements Deque<T> {
         size--;
         double usageRatio = (double) size / item.length;
         if (usageRatio < 0.25) {
-            resize(item.length / 2);
+            resize(item.length / 2 + 1);
         }
         return res;
     }
@@ -71,7 +73,7 @@ public class ArrayDeque<T> implements Deque<T> {
         size--;
         double usageRatio = (double) size / item.length;
         if (usageRatio < 0.25) {
-            resize(item.length / 2);
+            resize(item.length / 2 + 1);
         }
         return res;
     }
@@ -90,11 +92,6 @@ public class ArrayDeque<T> implements Deque<T> {
     }
 
     @Override
-    public boolean isEmpty() {
-        return size == 0;
-    }
-
-    @Override
     public void printDeque() {
         for (int i = 0; i < size; i++) {
             System.out.print(get(i) + " ");
@@ -102,5 +99,38 @@ public class ArrayDeque<T> implements Deque<T> {
         System.out.println();
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || !(o instanceof Deque)) return false;
+        Deque<?> d = (Deque<?>) o;
+        if (size != d.size()) return false;
+        for (int i = 0; i < size; i++) {
+            if (!d.get(i).equals(get(i))) return false;
+        }
+        return true;
+    }
 
+    @Override
+    public Iterator<T> iterator() {
+        return new ArrayDequeIterator();
+    }
+
+    private class ArrayDequeIterator implements Iterator<T> {
+        private int index;
+
+        public ArrayDequeIterator() {
+            index = 0;
+        }
+
+        public boolean hasNext() {
+            return index < size;
+        }
+
+        public T next() {
+            T returnItem = get(index);
+            index += 1;
+            return returnItem;
+        }
+    }
 }

@@ -1,6 +1,9 @@
 package deque;
 
 import org.junit.Test;
+
+import java.util.Comparator;
+import edu.princeton.cs.introcs.StdRandom;
 import static org.junit.Assert.*;
 
 
@@ -8,36 +11,54 @@ import static org.junit.Assert.*;
 public class LinkedListDequeTest {
 
     @Test
-    public void testAdd() {
-        Deque<Integer> deque = new ArrayDeque<>();
-        deque.addFirst(1);
-        deque.addLast(2);
-        deque.addLast(3);
-        deque.addLast(4);
-        deque.addLast(5);
-        deque.addFirst(0);
-        deque.addLast(6);
-        deque.addLast(7);
-        deque.addLast(8);
-        deque.addLast(9);
-        deque.addFirst(-1);
-        int first = deque.get(2);
-        assertEquals(1, first);
-        assertEquals(11, deque.size());
-        int second = deque.removeFirst();
-        assertEquals(-1, second);
-        int third = deque.removeLast();
-        assertEquals(9, third);
-        int fourth = deque.removeLast();
-        assertEquals(8, fourth);
-        int fifth = deque.removeFirst();
-        assertEquals(0, fifth);
-        deque.printDeque();
-        fifth = deque.removeFirst();
-        fifth = deque.removeFirst();
-        fifth = deque.removeFirst();
-        fifth = deque.removeFirst();
-        fifth = deque.removeFirst();
+    public void testMaxArrayDeque() {
+        class TestComparator implements Comparator<Integer>  {
+            @Override
+            public int compare(Integer o1, Integer o2) {
+                return o1.compareTo(o2);
+            }
+        }
+
+        TestComparator comparator = new TestComparator();
+        MaxArrayDeque<Integer> a = new MaxArrayDeque<>(comparator);
+        int max = 0;
+        for (int i = 0; i < 100; i++) {
+            int operationNumber = StdRandom.uniform(0,  4);
+            if (operationNumber == 0) {
+                int randVal = StdRandom.uniform(0,  100);
+                a.addLast(randVal);
+                if (randVal > max) {
+                    max = randVal;
+                }
+            } else if (operationNumber == 1) {
+                if (a.max() == null) continue;
+                int t = a.max();
+                assertEquals(max, t);
+            }
+        }
+    }
+
+    @Test
+    public void test() {
+        Deque<Integer> a = new LinkedListDeque<>();
+        ArrayDeque<Integer> b = new ArrayDeque<>();
+        for (int i = 0; i < 5000; i++) {
+            int operationNumber = StdRandom.uniform(0,  4);
+            if (operationNumber == 0) {
+                int randVal = StdRandom.uniform(0,  100);
+                a.addLast(randVal);
+                b.addLast(randVal);
+            } else if (operationNumber == 1) {
+                boolean o = a.equals(b);
+                assertTrue(o == true);
+            } else if  (operationNumber == 2) {
+                boolean o = b.equals(a);
+                assertTrue(o == true);
+            } else if (operationNumber == 3) {
+                a.removeLast();
+                b.removeLast();
+            }
+        }
     }
 
     @Test
