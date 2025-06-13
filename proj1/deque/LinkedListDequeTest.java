@@ -11,6 +11,17 @@ import static org.junit.Assert.*;
 public class LinkedListDequeTest {
 
     @Test
+    public void testRemove() {
+        Deque<Integer> deque = new ArrayDeque<>();
+        deque.addLast(1);
+        deque.addLast(2);
+        deque.addLast(3);
+        deque.removeFirst();
+        assertEquals(2, deque.size());
+        deque.printDeque();
+    }
+
+    @Test
     public void testMaxArrayDeque() {
         class TestComparator implements Comparator<Integer>  {
             @Override
