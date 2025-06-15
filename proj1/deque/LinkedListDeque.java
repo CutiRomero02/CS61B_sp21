@@ -7,11 +7,11 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
     private int size;
 
     private class StuffNode {
-        public T item;
-        public StuffNode next;
-        public StuffNode prev;
+        private T item;
+        private StuffNode next;
+        private StuffNode prev;
 
-        public StuffNode(T data, StuffNode n, StuffNode l) {
+        StuffNode(T data, StuffNode n, StuffNode l) {
             this.item = data;
             this.next = n;
             this.prev = l;
