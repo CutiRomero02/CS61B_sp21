@@ -3,9 +3,9 @@ package deque;
 import java.util.Iterator;
 
 public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
-    T[] item;
-    int size;
-    int front;
+    private T[] item;
+    private int size;
+    private int front;
 
     public ArrayDeque() {
         item = (T[]) new Object[8];
@@ -101,13 +101,29 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || !(o instanceof Deque)) return false;
-        Deque<?> d = (Deque<?>) o;
-        if (size != d.size()) return false;
-        for (int i = 0; i < size; i++) {
-            if (!d.get(i).equals(get(i))) return false;
+        if (this == o) {
+            return true;
         }
+
+        if (o == null || !(o instanceof Deque)) {
+            return false;
+        }
+
+        Deque<?> d = (Deque<?>) o;
+
+        if (size != d.size()) {
+            return false;
+        }
+
+        for (int i = 0; i < size; i++) {
+            Object thisElement = get(i);
+            Object otherElement = d.get(i);
+
+            if (!thisElement.equals(otherElement)) {
+                return false;
+            }
+        }
+
         return true;
     }
 
@@ -119,7 +135,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     private class ArrayDequeIterator implements Iterator<T> {
         private int index;
 
-        public ArrayDequeIterator() {
+        ArrayDequeIterator() {
             index = 0;
         }
 

@@ -11,19 +11,19 @@ public interface Deque<T> {
         return size() == 0;
     }
 
-    int size() ;
+    int size();
 
-    void printDeque() ;
+    void printDeque();
 
-    T removeFirst() ;
+    T removeFirst();
 
     T removeLast();
 
-    T get(int index) ;
+    T get(int index);
 
-    Iterator<T> iterator() ;
+    Iterator<T> iterator();
 
-    boolean equals(Object o) ;
+    boolean equals(Object o);
 
 
 }
