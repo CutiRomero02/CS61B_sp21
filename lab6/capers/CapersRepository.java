@@ -84,7 +84,8 @@ public class CapersRepository {
      */
     public static void celebrateBirthday(String name) {
         // TODO
-        Dog dog = Dog.fromFile(name);
+        File file = Utils.join(Dog.DOG_FOLDER, name + ".txt");
+        Dog dog = Utils.readObject(file, Dog.class);
         dog.haveBirthday();
         dog.saveDog();
     }
