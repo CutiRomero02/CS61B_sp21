@@ -1,6 +1,7 @@
 package capers;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.Serializable;
 import static capers.Utils.*;
 
@@ -57,6 +58,13 @@ public class Dog implements Serializable { // TODO
      */
     public void saveDog() {
         // TODO (hint: don't forget dog names are unique)
+        File dogFile = new File(DOG_FOLDER, String.format("%s.txt", name));
+        try {
+            dogFile.createNewFile();
+            Utils.writeObject(dogFile, this);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
