@@ -96,6 +96,10 @@ public class TestBSTMap {
           b.put(2, "two");
           b.printInOrder();
           System.out.println(b.keySet());
+
+          for (Integer i: b) {
+              System.out.println(i + "!!!");
+          }
     }
 
 }

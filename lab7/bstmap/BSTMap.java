@@ -16,23 +16,6 @@ public class BSTMap<K extends Comparable, V> implements Map61B<K, V> {
         }
     }
 
-    @Override
-    public Iterator<K> iterator() {
-        return new BSTMapIterator();
-    }
-
-    private class BSTMapIterator implements Iterator<K> {
-        private int index = 0;
-
-        public boolean hasNext() {
-            return index < size;
-        }
-
-        public K next() {
-            throw new UnsupportedOperationException();
-        }
-    }
-
     private BSTNode root;
     private int size;
 
@@ -195,18 +178,34 @@ public class BSTMap<K extends Comparable, V> implements Map61B<K, V> {
     }
 
     public void printInOrder() {
-        List<V> list = orderedList(root);
+        List<V> list = orderedValueList(root);
         System.out.println(list);
     }
 
-    private List<V> orderedList(BSTNode node) {
+    private List<V> orderedValueList(BSTNode node) {
         if (node == null) {
             return new ArrayList<>();
         }
-        List<V> left = orderedList(node.left);
-        List<V> right = orderedList(node.right);
+        List<V> left = orderedValueList(node.left);
+        List<V> right = orderedValueList(node.right);
         left.add(node.value);
         left.addAll(right);
         return left;
+    }
+
+    private List<K> orderedKeyList(BSTNode node) {
+        if (node == null) {
+            return new ArrayList<>();
+        }
+        List<K> left = orderedKeyList(node.left);
+        List<K> right = orderedKeyList(node.right);
+        left.add(node.key);
+        left.addAll(right);
+        return left;
+    }
+
+    @Override
+    public Iterator<K> iterator() {
+        return orderedKeyList(root).iterator();
     }
 }
