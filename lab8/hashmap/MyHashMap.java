@@ -28,11 +28,18 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
     /* Instance Variables */
     private Collection<Node>[] buckets;
     // You should probably define some more!
+    int size;
+    double loadFactor;
+
 
     /** Constructors */
-    public MyHashMap() { }
+    public MyHashMap() {
+        this(16, 1.5);
+    }
 
-    public MyHashMap(int initialSize) { }
+    public MyHashMap(int initialSize) {
+        this(initialSize, 1.5);
+    }
 
     /**
      * MyHashMap constructor that creates a backing array of initialSize.
@@ -41,7 +48,31 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
      * @param initialSize initial size of backing array
      * @param maxLoad maximum load factor
      */
-    public MyHashMap(int initialSize, double maxLoad) { }
+    public MyHashMap(int initialSize, double maxLoad) {
+        buckets = new Collection[initialSize];
+        size = 0;
+        loadFactor = maxLoad;
+    }
+
+    @Override
+    public void clear() {
+        buckets = new Collection[16];
+        size = 0;
+        loadFactor = 1.5;
+    }
+
+    @Override
+    public boolean containsKey(K key) {
+        int hash = key.hashCode();
+        int bucketIndex = hash % buckets.length;
+        Collection<Node> bucket = buckets[bucketIndex];
+        for (Node node : bucket) {
+            if (node.key.equals(key)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     /**
      * Returns a new node to be placed in a hash table bucket
