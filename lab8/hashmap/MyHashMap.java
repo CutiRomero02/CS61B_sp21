@@ -37,11 +37,11 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
 
     /** Constructors */
     public MyHashMap() {
-        this(16, 1.5);
+        this(16, 0.75);
     }
 
     public MyHashMap(int initialSize) {
-        this(initialSize, 1.5);
+        this(initialSize, 0.75);
     }
 
     /**
@@ -52,11 +52,57 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
      * @param maxLoad maximum load factor
      */
     public MyHashMap(int initialSize, double maxLoad) {
-        buckets = new Collection[initialSize];
+        buckets = createTable(initialSize);
         size = 0;
         loadFactor = maxLoad;
     }
 
+
+    /**
+     * Returns a new node to be placed in a hash table bucket
+     */
+    private Node createNode(K key, V value) {
+        Node node = new Node(key, value);
+        return node;
+    }
+
+    /**
+     * Returns a data structure to be a hash table bucket
+     *
+     * The only requirements of a hash table bucket are that we can:
+     *  1. Insert items (`add` method)
+     *  2. Remove items (`remove` method)
+     *  3. Iterate through items (`iterator` method)
+     *
+     * Each of these methods is supported by java.util.Collection,
+     * Most data structures in Java inherit from Collection, so we
+     * can use almost any data structure as our buckets.
+     *
+     * Override this method to use different data structures as
+     * the underlying bucket type
+     *
+     * BE SURE TO CALL THIS FACTORY METHOD INSTEAD OF CREATING YOUR
+     * OWN BUCKET DATA STRUCTURES WITH THE NEW OPERATOR!
+     */
+    protected Collection<Node> createBucket() {
+        return new HashSet<>();
+    }
+
+    /**
+     * Returns a table to back our hash table. As per the comment
+     * above, this table can be an array of Collection objects
+     *
+     * BE SURE TO CALL THIS FACTORY METHOD WHEN CREATING A TABLE SO
+     * THAT ALL BUCKET TYPES ARE OF JAVA.UTIL.COLLECTION
+     *
+     * @param tableSize the size of the table to create
+     */
+    private Collection<Node>[] createTable(int tableSize) {
+        return new Collection[tableSize];
+    }
+
+    // TODO: Implement the methods of the Map61B Interface below
+    // Your code won't compile until you do so!
     @Override
     public void clear() {
         buckets = new Collection[16];
@@ -135,50 +181,5 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
         Set<K> set = keySet();
         return set.iterator();
     }
-
-    /**
-     * Returns a new node to be placed in a hash table bucket
-     */
-    private Node createNode(K key, V value) {
-        return null;
-    }
-
-    /**
-     * Returns a data structure to be a hash table bucket
-     *
-     * The only requirements of a hash table bucket are that we can:
-     *  1. Insert items (`add` method)
-     *  2. Remove items (`remove` method)
-     *  3. Iterate through items (`iterator` method)
-     *
-     * Each of these methods is supported by java.util.Collection,
-     * Most data structures in Java inherit from Collection, so we
-     * can use almost any data structure as our buckets.
-     *
-     * Override this method to use different data structures as
-     * the underlying bucket type
-     *
-     * BE SURE TO CALL THIS FACTORY METHOD INSTEAD OF CREATING YOUR
-     * OWN BUCKET DATA STRUCTURES WITH THE NEW OPERATOR!
-     */
-    protected Collection<Node> createBucket() {
-        return null;
-    }
-
-    /**
-     * Returns a table to back our hash table. As per the comment
-     * above, this table can be an array of Collection objects
-     *
-     * BE SURE TO CALL THIS FACTORY METHOD WHEN CREATING A TABLE SO
-     * THAT ALL BUCKET TYPES ARE OF JAVA.UTIL.COLLECTION
-     *
-     * @param tableSize the size of the table to create
-     */
-    private Collection<Node>[] createTable(int tableSize) {
-        return null;
-    }
-
-    // TODO: Implement the methods of the Map61B Interface below
-    // Your code won't compile until you do so!
 
 }
