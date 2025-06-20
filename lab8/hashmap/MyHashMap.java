@@ -1,6 +1,9 @@
 package hashmap;
 
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
 
 /**
  *  A hash table-backed Map implementation. Provides amortized constant time
@@ -64,7 +67,7 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
     @Override
     public boolean containsKey(K key) {
         int hash = key.hashCode();
-        int bucketIndex = hash % buckets.length;
+        int bucketIndex = Math.floorMod(hash, buckets.length);
         Collection<Node> bucket = buckets[bucketIndex];
         for (Node node : bucket) {
             if (node.key.equals(key)) {
@@ -72,6 +75,65 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
             }
         }
         return false;
+    }
+
+    @Override
+    public V get(K key) {
+        int hash = key.hashCode();
+        int bucketIndex = Math.floorMod(hash, buckets.length);
+        Collection<Node> bucket = buckets[bucketIndex];
+        for (Node node : bucket) {
+            if (node.key.equals(key)) {
+                return node.value;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public int size() {
+        return size;
+    }
+
+    @Override
+    public void put(K key, V value) {
+        int hash = key.hashCode();
+        int bucketIndex = Math.floorMod(hash, buckets.length);
+        Collection<Node> bucket = buckets[bucketIndex];
+        for (Node node : bucket) {
+            if (node.key.equals(key)) {
+                node.value = value;
+                return;
+            }
+        }
+        bucket.add(new Node(key, value));
+    }
+
+    @Override
+    public Set<K> keySet() {
+        Set<K> set = new HashSet<>();
+        for (Collection<Node> bucket : buckets) {
+            for (Node node : bucket) {
+                set.add(node.key);
+            }
+        }
+        return set;
+    }
+
+    @Override
+    public V remove(K key) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public V remove(K key, V value) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public Iterator<K> iterator() {
+        Set<K> set = keySet();
+        return set.iterator();
     }
 
     /**
