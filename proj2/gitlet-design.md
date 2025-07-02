@@ -4,12 +4,12 @@
 
 ## Classes and Data Structures
 
-### Class 1
+### Commit
 
-#### Fields
-
-1. Field 1
-2. Field 2
+#### Instance Variables
+* Message - contains the message of a commit.
+* Timestamp - time at which a commit was created. Assigned by constructor.
+* Parent - the parent of a commit object.
 
 
 ### Class 2
