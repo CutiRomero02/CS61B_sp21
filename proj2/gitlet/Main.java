@@ -21,6 +21,9 @@ public class Main {
              *  Uninitialized Gitlet working directory, throw Not in an initialized Gitlet directory.*/
 
             case "init":
+                if (args.length != 1) {
+                    throw new GitletException("Incorrect operands.");
+                }
                 Repository.init();
                 break;
             case "add":
