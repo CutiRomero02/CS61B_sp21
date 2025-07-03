@@ -1,5 +1,7 @@
 package gitlet;
 
+import java.io.File;
+
 /** Driver class for Gitlet, a subset of the Git version-control system.
  *  @author Tommy Ma
  */
@@ -15,6 +17,9 @@ public class Main {
         }
 
         String firstArg = args[0];
+
+        File inputFile = Repository.REPO_INFO;
+        Repository repo = Utils.readObject(inputFile, Repository.class);
         switch(firstArg) {
 
             /** Wrong number or format of operands, throw Incorrect operands.
@@ -24,7 +29,8 @@ public class Main {
                 if (args.length != 1) {
                     throw new GitletException("Incorrect operands.");
                 }
-                Repository.init();
+                repo.init();
+                Utils.writeObject(inputFile, repo);
                 break;
             case "add":
                 // TODO: handle the `add [filename]` command

@@ -1,6 +1,7 @@
 package gitlet;
 
 import java.io.File;
+import java.io.Serializable;
 import java.util.*;
 
 
@@ -14,7 +15,7 @@ import static gitlet.Utils.*;
  *
  *  @author Tommy Ma
  */
-public class Repository {
+public class Repository implements Serializable {
     /**
      * TODO: add instance variables here.
      *
@@ -24,7 +25,7 @@ public class Repository {
      */
 
     /* Maps the SHA-1 Hash to each commit. */
-    private Map<String, Commit> commits = new TreeMap<>();
+    CommitTree commitTree = new CommitTree();
 
 
     /** The current working directory. */
@@ -32,11 +33,11 @@ public class Repository {
     /** The .gitlet directory. */
     public static final File GITLET_DIR = join(CWD, ".gitlet");
     /** The file that stores the tree of commits. */
-    public static final File COMMIT_FILE = join(GITLET_DIR, "commits.txt");
+    public static final File REPO_INFO = join(GITLET_DIR, "info.txt");
 
     /* TODO: fill in the rest of this class. */
 
-    public static void init() {
+    public void init() {
         boolean repoCreated = GITLET_DIR.mkdir();
         if (!repoCreated) {
             throw new GitletException("A Gitlet version-control system already exists in the current directory.");
@@ -46,15 +47,4 @@ public class Repository {
 
     }
 
-    public void addToCommits(String commitHash, Commit commit) {
-        commits.put(commitHash, commit);
-    }
-
-    public Map<String, Commit> getCommits() {
-        return commits;
-    }
-
-    public void setCommits(Map<String, Commit> commits) {
-        this.commits = commits;
-    }
 }

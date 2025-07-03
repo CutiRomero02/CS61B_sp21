@@ -2,6 +2,7 @@ package gitlet;
 
 // TODO: any imports you need here
 import java.io.File;
+import java.io.Serializable;
 import java.util.Map;
 
 /** Represents a gitlet commit object.
@@ -10,7 +11,7 @@ import java.util.Map;
  *
  *  @author Tommy Ma
  */
-public class Commit {
+public class Commit implements Serializable {
     /**
      * TODO: add instance variables here.
      *
